@@ -9,11 +9,15 @@ function Search({ movements, editMovement, removeMovement }) {
 
     const [filteredTypes, setFilteredTypes] = useState("todos");
 
+    const [filteredName, setFilteredName] = useState("");
+
     useEffect(() => {
+
         if (filteredTypes === "todos") {
-            setFilteredMovements(movements);
+            filterMovementsNameOnly();
         } else {
-            setFilteredMovements(movements.filter(movement => movement.movementType === filteredTypes));
+            setFilteredMovements(movements.filter(movement => movement.movementType === filteredTypes &&
+                (filteredName !== "" ? movement.name.toUpperCase().includes(filteredName.toUpperCase()) : true)));
         }
 
     }, [movements]);
@@ -23,17 +27,39 @@ function Search({ movements, editMovement, removeMovement }) {
         setFilteredTypes(e.target.name);
 
         if (e.target.name === "todos") {
-            setFilteredMovements(movements);
+            filterMovementsNameOnly();
         } else {
-            setFilteredMovements(movements.filter(movement => movement.movementType === e.target.name));
+            setFilteredMovements(movements.filter(movement => movement.movementType === e.target.name &&
+                (filteredName !== "" ? movement.name.toUpperCase().includes(filteredName.toUpperCase()) : true)));
+        }
+    }
+
+    const filterMovementsNameOnly = () => {
+        if (filteredName !== "") {
+            setFilteredMovements(movements.filter(movement =>
+                movement.name.toUpperCase().includes(filteredName.toUpperCase())));
+        } else {
+            setFilteredMovements(movements);
         }
     }
 
     const handleInputFindChange = (e) => {
+
+        setFilteredName(e.target.value);
         /**El toUpperCase es para que no tenga en cuenta lo del sensitive, 
          * es decir que no importe si ingresan en mayuscula o minuscula
          */
-        setFilteredMovements(movements.filter(movement => movement.name.toUpperCase().includes(e.target.value.toUpperCase())));
+
+        if (filteredTypes === "todos") {
+            setFilteredMovements(movements
+                .filter(movement => (e.target.value !== "" ? movement.name.toUpperCase()
+                    .includes(e.target.value.toUpperCase()) : true)));
+        } else {
+            setFilteredMovements(movements
+                .filter(movement => movement.movementType === filteredTypes
+                    && (e.target.value !== "" ? movement.name.toUpperCase()
+                        .includes(e.target.value.toUpperCase()) : true)));
+        }
     }
 
     return (
