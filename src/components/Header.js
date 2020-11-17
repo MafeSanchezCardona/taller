@@ -14,7 +14,7 @@ const Header = ({ title, finalBalance, initialBalance, addInitialBalance }) => {
             <Navbar.Brand className="font-weight-bold" href="#home">
                 <img
                     alt=""
-                    src="https://w7.pngwing.com/pngs/1021/681/png-transparent-piggy-bank-money-dollar-saving-logo-bank.png"
+                    src="https://images.vexels.com/media/users/3/153797/isolated/preview/4c530aaa31fee46760a577666a13708d-icono-de-trazo-coloreado-de-billetes-de-dinero-by-vexels.png"
                     width="40"
                     height="40"
                     className="d-inline-block align-top"
